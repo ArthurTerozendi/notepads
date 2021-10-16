@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableHighlight, Text, Modal } from "react-native";
+import { View, StyleSheet, TouchableHighlight, Text, Modal, TextInput } from "react-native";
 import { Entypo } from '@expo/vector-icons';
 
 export default function App(props) {
     const [visible, setVisibility] = useState(false);
+    const [data, setData] = useState(`Olá! ${props.value}`)
     return (
         <View>
             <TouchableHighlight
                 onPress={() => setVisibility(true)}
             >
                 <View style={style.note}>
-                    <Text style={{ color: 'black' }} > {props.value} </Text>
+                    <Text style={{ color: 'black' }} > {data} </Text>
                 </View>
             </TouchableHighlight>
             <Modal
@@ -27,6 +28,12 @@ export default function App(props) {
                         </View>
                     </TouchableHighlight>
                     <Text> {props.value} </Text>
+                    <TextInput
+                        style={style.textArea}
+                        value={data}
+                        onChangeText={text => setData(text)}
+                        autoCapitalize="sentences"
+                        multiline={true} />
                 </View>
             </Modal>
         </View>
@@ -50,5 +57,13 @@ const style = StyleSheet.create({
     },
     closeButton: {
         alignItems: "flex-end"
+    },
+    textArea: {
+        width: "100%",
+        height: "90%",
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: '#00000011',
+        textAlignVertical: "top"
     }
 })
