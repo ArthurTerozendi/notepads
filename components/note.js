@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableHighlight, Text, Modal, TextInput } from "react-native";
+import { View, StyleSheet, TouchableHighlight, TouchableWithoutFeedback, Text, Modal, TextInput } from "react-native";
+
 import { Entypo } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function App(props) {
     const [visible, setVisibility] = useState(false);
-    const [data, setData] = useState(`Olá! ${props.value}`)
+    const [data, setData] = useState(`${props.value}`);
+    const [remove, setRemove] = useState(false)
+
+
+    const closeRemoveModal = () => setRemove(false)
+
     return (
         <View>
             <TouchableHighlight
+                onLongPress={() => setRemove(true)}
                 onPress={() => setVisibility(true)}
             >
                 <View style={style.note}>
-                    <Text style={{ color: 'black' }} > {data} </Text>
+                    <Text style={{ color: 'black' }} > {props.name} </Text>
                 </View>
             </TouchableHighlight>
             <Modal
@@ -20,13 +28,13 @@ export default function App(props) {
                 visible={visible}
             >
                 <View style={style.modal}>
-                    <TouchableHighlight
+                    <TouchableWithoutFeedback
                         onPress={() => setVisibility(false)}
                     >
                         <View style={style.closeButton}>
                             <Entypo name="cross" size={24} color="black" />
                         </View>
-                    </TouchableHighlight>
+                    </TouchableWithoutFeedback>
                     <Text> {props.value} </Text>
                     <TextInput
                         style={style.textArea}
@@ -36,7 +44,33 @@ export default function App(props) {
                         multiline={true} />
                 </View>
             </Modal>
-        </View>
+
+            <Modal
+                transparent={true}
+                visible={remove}
+                animationType="slide"
+                onRequestClose={() => setRemove(false)}
+            >
+                <View style={style.removeModal}>
+                    <View style={style.remove}>
+                        <TouchableWithoutFeedback
+                            onPress={closeRemoveModal}
+                        >
+                            <View style={style.closeButton}>
+                                <Entypo name="cross" size={24} color="black" />
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <View style={style.removeButton}>
+                            <TouchableHighlight
+                                onPress={props.removeNote}
+                            >
+                                <FontAwesome5 name="trash" size={24} color="red" />
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </View>
+            </Modal >
+        </View >
     )
 }
 
@@ -63,7 +97,20 @@ const style = StyleSheet.create({
         height: "90%",
         marginTop: 10,
         borderWidth: 1,
-        borderColor: '#00000011',
+        borderColor: '#00000001',
         textAlignVertical: "top"
+    },
+    removeModal: {
+        width: '100%',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end'
+    },
+    remove: {
+        height: 60,
+        backgroundColor: '#303841'
+    },
+    removeButton: {
+        alignItems: 'center',
     }
 })
