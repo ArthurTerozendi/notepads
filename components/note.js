@@ -90,12 +90,12 @@ const style = StyleSheet.create({
         width: 150,
         height: 150,
         margin: 10,
-        padding: 20,
-        alignItems: "center",
+        padding: 5,
     },
     noteText: {
         color: 'black',
-        fontSize: 20,
+        fontSize: 18,
+        textAlign: 'left'
     },
     modal: {
         backgroundColor: "#F6C90E",
