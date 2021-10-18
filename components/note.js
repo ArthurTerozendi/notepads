@@ -35,7 +35,7 @@ export default function App(props) {
                             <Entypo name="cross" size={24} color="black" />
                         </View>
                     </TouchableWithoutFeedback>
-                    <Text> {props.value} </Text>
+                    <Text style={style.noteText}> {props.name} </Text>
                     <TextInput
                         style={style.textArea}
                         value={data}
