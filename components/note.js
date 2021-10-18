@@ -7,6 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 export default function App(props) {
     const [visible, setVisibility] = useState(false);
     const [data, setData] = useState(`${props.value}`);
+    const [name, setName] = useState(`${props.name}`)
     const [remove, setRemove] = useState(false)
 
 
@@ -30,12 +31,17 @@ export default function App(props) {
                 <View style={style.modal}>
                     <TouchableWithoutFeedback
                         onPress={() => setVisibility(false)}
+                        onPressOut={() => props.saveNote(name, data)}
                     >
                         <View style={style.closeButton}>
                             <Entypo name="cross" size={24} color="black" />
                         </View>
                     </TouchableWithoutFeedback>
-                    <Text style={style.noteText}> {props.name} </Text>
+                    <TextInput
+                        style={style.noteText}
+                        value={name}
+                        onChangeText={text => setName(text)}
+                    />
                     <TextInput
                         style={style.textArea}
                         value={data}
@@ -56,7 +62,7 @@ export default function App(props) {
                         <View>
                             <TouchableWithoutFeedback
                                 onPress={closeRemoveModal}
-                                onPressOut={props.saveNote}
+                                onPressOut={props.removeNote}
                             >
                                 <View style={style.closeButton}>
                                     <Entypo name="cross" size={24} color="black" />

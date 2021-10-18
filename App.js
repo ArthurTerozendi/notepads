@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight, AsyncStorage } from 'react-native';
+import { StyleSheet, View, SafeAreaView, ScrollView, TouchableHighlight, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import AS_Notes from '@react-native-async-storage/async-storage';
 
@@ -14,13 +14,20 @@ export default function App() {
   }
 
   const getNotes = async () => {
-    const saveNotes = await AS_Notes.getItem("notes");
-    let n = JSON.parse(saveNotes);
+    const savedNotes = await AS_Notes.getItem("notes");
+    let n = JSON.parse(savedNotes);
     if (n != null)
       setNotes(n);
   }
 
-  const saveNotes = () => {
+  const saveNotes = (id, name, value) => {
+    notes.forEach(n => {
+      if (id == n.id) {
+        n.name = name;
+        n.value = value;
+      }
+    })
+    setNotes(notes => [...notes])
     AS_Notes.setItem("notes", notes.toString())
   }
 
@@ -34,7 +41,7 @@ export default function App() {
     if (index != -1) {
       notes.splice(index, 1);
       setNotes(notes => [...notes]);
-      saveNotes();
+      AS_Notes.setItem("notes", notes);
     }
   }
   getNotes();
@@ -48,7 +55,9 @@ export default function App() {
               value={note.value}
               name={note.name}
               removeNote={() => setRemoveItem(note.id)}
-              saveNote={() => saveNotes()}
+              saveNote={(name, value) => {
+                  saveNotes(note.id, name, value)
+              }}
             />
           ))
         }
