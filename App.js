@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableHighlight, AsyncStorage } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import AS_Notes from '@react-native-async-storage/async-storage';
 
 import Note from "./components/note"
 
@@ -10,6 +11,17 @@ export default function App() {
   const addNote = () => {
     setCount(count + 1);
     setNotes(notes => [...notes, { id: count, name: `Nota ${count}`, value: "" }])
+  }
+
+  const getNotes = async () => {
+    const saveNotes = await AS_Notes.getItem("notes");
+    let n = JSON.parse(saveNotes);
+    if (n != null)
+      setNotes(n);
+  }
+
+  const saveNotes = () => {
+    AS_Notes.setItem("notes", notes.toString())
   }
 
   const setRemoveItem = id => {
@@ -22,14 +34,23 @@ export default function App() {
     if (index != -1) {
       notes.splice(index, 1);
       setNotes(notes => [...notes]);
+      saveNotes();
     }
   }
-
+  getNotes();
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#303841' }}>
       <SafeAreaView style={styles.container}>
         {
-          notes.map(note => (<Note key={note.id} value={note.value} name={note.name} removeNote={() => setRemoveItem(note.id)} />))
+          notes.map(note => (
+            <Note
+              key={note.id}
+              value={note.value}
+              name={note.name}
+              removeNote={() => setRemoveItem(note.id)}
+              saveNote={() => saveNotes()}
+            />
+          ))
         }
         <TouchableHighlight
           onPress={addNote}

@@ -56,6 +56,7 @@ export default function App(props) {
                         <View>
                             <TouchableWithoutFeedback
                                 onPress={closeRemoveModal}
+                                onPressOut={props.saveNote}
                             >
                                 <View style={style.closeButton}>
                                     <Entypo name="cross" size={24} color="black" />
