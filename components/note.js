@@ -19,7 +19,7 @@ export default function App(props) {
                 onPress={() => setVisibility(true)}
             >
                 <View style={style.note}>
-                    <Text style={{ color: 'black' }} > {props.name} </Text>
+                    <Text style={style.noteText} > {props.name} </Text>
                 </View>
             </TouchableHighlight>
             <Modal
@@ -53,16 +53,19 @@ export default function App(props) {
             >
                 <View style={style.removeModal}>
                     <View style={style.remove}>
-                        <TouchableWithoutFeedback
-                            onPress={closeRemoveModal}
-                        >
-                            <View style={style.closeButton}>
-                                <Entypo name="cross" size={24} color="black" />
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <View>
+                            <TouchableWithoutFeedback
+                                onPress={closeRemoveModal}
+                            >
+                                <View style={style.closeButton}>
+                                    <Entypo name="cross" size={24} color="black" />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
                         <View style={style.removeButton}>
                             <TouchableHighlight
                                 onPress={props.removeNote}
+                                onPressOut={closeRemoveModal}
                             >
                                 <FontAwesome5 name="trash" size={24} color="red" />
                             </TouchableHighlight>
@@ -79,7 +82,13 @@ const style = StyleSheet.create({
         backgroundColor: "#F6C90E",
         width: 150,
         height: 150,
-        margin: 10
+        margin: 10,
+        padding: 20,
+        alignItems: "center",
+    },
+    noteText: {
+        color: 'black',
+        fontSize: 20,
     },
     modal: {
         backgroundColor: "#F6C90E",
