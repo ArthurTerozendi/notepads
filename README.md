@@ -5,11 +5,12 @@
 
 O aplicativo é simples, tendo uma tela principal e a partir dela conseguimos criar quantas notas desejarmos, acessar e mudar o texto de cada uma delas, junto a seu título.
 
-[imagem-aqui]
+[./assets/principal.png]
+[./assets/textarea.png]
 
 Ao pressionar um bloco de notas, podemos excluir ele.
 
-[imagem-aqui]
+[./assets/remove.png]
 
 ## Tecnologia
 Foi desenvolvido em [React Native](https://reactnative.dev/) juntamento com o [Expo](https://expo.dev/).
