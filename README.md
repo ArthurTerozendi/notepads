@@ -18,3 +18,7 @@ Foi desenvolvido em [React Native](https://reactnative.dev/) juntamento com o [E
 Tem dois arquivos principais:
   - [App.js](https://github.com/ArthurTerozendi/notepads/blob/main/App.js) - Tela principal do aplicativo;
   - [Note.js](https://github.com/ArthurTerozendi/notepads/blob/main/components/note.js) - Componente da nota.
+  
+## Feito Por:
+  - Arthur Terozendi
+  - Uciolli Lemos
